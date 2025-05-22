@@ -10,6 +10,7 @@ OBJ_DIR = ./obj
 SRCS = $(SRC_DIR)/main.c \
 		$(SRC_DIR)/core/init.c \
 		$(SRC_DIR)/hooks/key_inputs.c \
+		$(SRC_DIR)/render/utils.c \
 		$(SRC_DIR)/exit_cleanup.c
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

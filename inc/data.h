@@ -37,6 +37,7 @@ typedef struct	s_prac
 {
 	void	*mlx;
 	void	*window;
+	int		reset_frame;
 	t_image	*screen;
 	t_image	*block;
 }	t_prac;
@@ -50,8 +51,13 @@ int	initialize(t_prac *data);
 
 // HOOKS
 int	close_window(void *data);
-int	key_inputs(int key, void *data);
+int	key_inputs(int key, t_prac *data);
 
-
+//RENDER
+unsigned int	get_color(t_image* asset, int x, int y);
+char			*get_image_addr(t_image *asset);
+void			blit_to_buffer(t_image *asset, int x, int y, int color);
+int				render_loop(t_prac *data);
+void			render_frame(t_prac *data, t_image *screen, t_image *block);
 
 #endif

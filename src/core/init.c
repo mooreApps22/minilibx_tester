@@ -40,7 +40,8 @@ int	create_images(t_prac *data)
 	data->screen->addr = mlx_get_data_addr(data->screen->img,
 		&data->screen->bpp, &data->screen->llen, &data->screen->en);
 
-	data->block->img = mlx_xpm_file_to_image(data->mlx, "textures/east.xpm", &data->block->w, &data->block->h);
+	data->block->img = mlx_xpm_file_to_image(data->mlx, "textures/big_east.xpm", &data->block->w, &data->block->h);
+	data->reset_frame = 1;
 	return (0);
 }
 

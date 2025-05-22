@@ -7,9 +7,19 @@ int	close_window(void *data)
 	return (0);
 }
 
-int	key_inputs(int key, void *data)
+int	key_inputs(int key, t_prac *data)
 {
 	if (key == XK_Escape || key == XK_q)
 		close_window(data);
+	else if (key == XK_a)
+	{
+		data->block->x--;
+	}
+	else if (key == XK_d)
+	{
+		data->block->x++;
+	}
+	data->reset_frame = 1;
+	memset(data->screen->addr, 0, data->screen->llen * HEIGHT);
 	return (0);
 }
