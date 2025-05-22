@@ -8,12 +8,16 @@ void	iterate_down_screen(t_image *screen, t_image *asset,
 	int				screen_y;
 	int				asset_y;
 	unsigned int	asset_color;
+	int				asset_display_height;
+	int				offset;
 
 
 	screen_y = 0;
+	asset_display_height = (int)(asset->h * scale);
+	offset = (HEIGHT - asset_display_height) / 2;
 	while (screen_y < HEIGHT)
 	{
-		asset_y = (int)(screen_y / scale);
+		asset_y = (int)((screen_y - offset) / scale);
 		if (asset_y >= 0 && asset_y < asset->h)
 		{
 			asset_color = get_color(asset, asset_x, asset_y);
