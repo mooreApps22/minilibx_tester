@@ -42,6 +42,7 @@ int	create_images(t_prac *data)
 
 	data->block->img = mlx_xpm_file_to_image(data->mlx, "textures/big_east.xpm", &data->block->w, &data->block->h);
 	data->reset_frame = 1;
+	data->rotation = 0.0;
 	return (0);
 }
 

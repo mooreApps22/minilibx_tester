@@ -19,6 +19,10 @@
 # define HEIGHT 480
 #endif
 
+#ifndef ROTATE_STEP 
+# define ROTATE_STEP 0.25f 
+#endif
+
 
 typedef struct	s_image
 {
@@ -40,6 +44,7 @@ typedef struct	s_prac
 	int		reset_frame;
 	t_image	*screen;
 	t_image	*block;
+	double	rotation;
 }	t_prac;
 
 //SRC

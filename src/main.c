@@ -2,33 +2,48 @@
 #include <string.h>
 
 
-void	iterate_down_screen(t_image *screen, t_image *asset, int i)
+void	iterate_down_screen(t_image *screen, t_image *asset,
+	int asset_x, int screen_x, float scale)
 {
-	int				j;
+	int				screen_y;
+	int				asset_y;
 	unsigned int	asset_color;
 
-	j = 0;
-	while (j < HEIGHT)
+
+	screen_y = 0;
+	while (screen_y < HEIGHT)
 	{
-		if (j >= 0 && j < asset->h)
+		asset_y = (int)(screen_y / scale);
+		if (asset_y >= 0 && asset_y < asset->h)
 		{
-			asset_color = get_color(asset, i, j);
-			blit_to_buffer(screen, i + asset->x, j + asset->y, asset_color);
+			asset_color = get_color(asset, asset_x, asset_y);
+			blit_to_buffer(screen, screen_x, screen_y, asset_color);
 		}
-		j++;
+		screen_y++;
 	}
 }
 
 void	iterate_across_screen(t_prac *data, t_image *screen, t_image *asset)
 {
-	int i;
+	int		asset_x;
+	int		screen_x_start;
+	int		center_asset_x;
+	float	local_scale;
+	float	offset;
 
-	i = 0;
-	while (i < WIDTH)
+	screen_x_start = (WIDTH - asset->w) / 2;
+	center_asset_x = asset->w / 2.0f;
+	asset_x = 0;
+	while (asset_x < asset->w)
 	{
-		if (i >= 0 && i < asset->w)
-			iterate_down_screen(screen, asset, i);
-		i++;
+		offset = (asset_x - center_asset_x);
+		local_scale = 1.0f + (offset * data->rotation * 0.01f);
+		if (local_scale < 0.1f)
+			local_scale = 0.1f;
+		if (local_scale > 5.0f)
+			local_scale = 5.0f;
+		iterate_down_screen(screen, asset, asset_x, screen_x_start + asset_x, local_scale);
+		asset_x++;
 	}
 	mlx_put_image_to_window(data->mlx, data->window, screen->img, asset->x, asset->y);
 }
@@ -43,13 +58,15 @@ int	main(int ac, char **av)
 {
 	t_prac	data;
 	(void)ac;
+	(void)av;
 
 	if (initialize(&data) != 0)
 		exit_cleanup(&data);
-	data.block->x = atoi(av[1]);
-	data.block->y = atoi(av[2]);
+//	data.block->x = atoi(av[1]);
+//	data.block->y = atoi(av[2]);
 
 	data.block->addr = get_image_addr(data.block);
+	data.rotation = 0.0f;
 	render_frame(&data, data.screen, data.block);
 
 	mlx_hook(data.window, DestroyNotify, StructureNotifyMask, close_window, &data);

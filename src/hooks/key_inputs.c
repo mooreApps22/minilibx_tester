@@ -13,11 +13,15 @@ int	key_inputs(int key, t_prac *data)
 		close_window(data);
 	else if (key == XK_a)
 	{
-		data->block->x--;
+		data->rotation -= ROTATE_STEP;
+		if (data->rotation < -50.0f)
+			data->rotation = -50.0f;
 	}
 	else if (key == XK_d)
 	{
-		data->block->x++;
+		data->rotation += ROTATE_STEP;
+		if (data->rotation > 50.0f)
+			data->rotation = 50.0f;
 	}
 	data->reset_frame = 1;
 	memset(data->screen->addr, 0, data->screen->llen * HEIGHT);
